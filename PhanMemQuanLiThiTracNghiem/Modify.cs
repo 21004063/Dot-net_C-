@@ -83,7 +83,7 @@ namespace PhanMemQuanLiThiTracNghiem
                 dataReader = sqlCommand.ExecuteReader();
                 while (dataReader.Read())
                 {
-                    sinhviens.Add(new Sinhvien(dataReader.GetString(0), dataReader.GetString(1), dataReader.GetString(2), dataReader.GetBoolean(3), dataReader.GetBoolean(4), dataReader.GetString(5), dataReader.GetBoolean(6)));
+                    sinhviens.Add(new Sinhvien(dataReader.GetString(0), dataReader.GetString(1), dataReader.GetString(2), dataReader.GetString(3), dataReader.GetBoolean(4), dataReader.GetDateTime(5), dataReader.GetString(6), dataReader.GetBoolean(7)));
                 }
                 sqlConnection.Close();
             }

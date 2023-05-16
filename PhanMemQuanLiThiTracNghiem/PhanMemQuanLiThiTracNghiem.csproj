@@ -73,6 +73,12 @@
     <Compile Include="frm_Lop.Designer.cs">
       <DependentUpon>frm_Lop.cs</DependentUpon>
     </Compile>
+    <Compile Include="frm_Messagebox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_Messagebox.Designer.cs">
+      <DependentUpon>frm_Messagebox.cs</DependentUpon>
+    </Compile>
     <Compile Include="frm_QuanLiAdmin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -125,9 +131,7 @@
     <Compile Include="RJButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="RJDatePicker.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="RJMessageBox.cs" />
     <Compile Include="RJRadioButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -153,6 +157,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frm_Lop.resx">
       <DependentUpon>frm_Lop.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_Messagebox.resx">
+      <DependentUpon>frm_Messagebox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frm_QuanLiAdmin.resx">
       <DependentUpon>frm_QuanLiAdmin.cs</DependentUpon>
@@ -208,10 +215,16 @@
     <None Include="Resources\logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\calendar1.png" />
+    <None Include="Resources\question-mark.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\calendar2.png" />
+    <None Include="Resources\cancel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\info.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warning.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

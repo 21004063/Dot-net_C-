@@ -33,6 +33,10 @@ namespace PhanMemQuanLiThiTracNghiem
             else
                 return false;
         }
+        public static bool TenTaiKhoanSV(string query)
+        {
+            return Regex.IsMatch(query, "^[0-9]{8}$");
+        }
         public static bool MatKhau(string matkhau)
         {
             return Regex.IsMatch(matkhau, "^[a-zA-Z0-9_@#$*!]{4,49}$");
@@ -50,5 +54,10 @@ namespace PhanMemQuanLiThiTracNghiem
                     group = "sinhvien";
             return group;
         }
+
+        
+
+
+
     }
 }
