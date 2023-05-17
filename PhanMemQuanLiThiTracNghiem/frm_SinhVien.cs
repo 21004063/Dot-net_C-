@@ -19,12 +19,13 @@ namespace PhanMemQuanLiThiTracNghiem
         }
         Modify modify = new Modify();
         List<Sinhvien> Sinhviens = new List<Sinhvien>();
-        string query = "select SINHVIEN.MSSV,HOTENSV,LOP.MAKHOA,SINHVIEN.MALOP,GIOITINHSV,NGAYSINHSV,PASSWORDSV,ENABLESV FROM SINHVIEN INNER JOIN SVACCOUNTS ON SINHVIEN.MSSV = SVACCOUNTS.MSSV INNER JOIN LOP ON LOP.MALOP = SINHVIEN.MALOP ORDER BY MSSV ASC";
+        string query = "select SINHVIEN.MSSV,HOTENSV,SINHVIEN.MALOP,LOP.MAKHOA,KHOA.TENKHOA,GIOITINHSV,NGAYSINHSV,PASSWORDSV,ENABLESV FROM SINHVIEN INNER JOIN SVACCOUNTS ON SINHVIEN.MSSV = SVACCOUNTS.MSSV INNER JOIN LOP ON LOP.MALOP = SINHVIEN.MALOP INNER JOIN KHOA ON KHOA.MAKHOA = SINHVIEN.MAKHOA ORDER BY MSSV ASC";
         private void frm_SinhVien_Load(object sender, EventArgs e)
         {
             HienThiSinhVien(query);
             ComboBox_mL();
             ComboBox_mK();
+            txt_mSV.Focus();
         }
         
         public void HienThiSinhVien(string q)
@@ -34,7 +35,7 @@ namespace PhanMemQuanLiThiTracNghiem
             dataSinhviens.Columns.Add("Mã số sinh viên");
             dataSinhviens.Columns.Add("Họ tên");
             dataSinhviens.Columns.Add("Mã khoa");
-            //dataSinhviens.Columns.Add("Tên khoa");
+            dataSinhviens.Columns.Add("Tên khoa");
             dataSinhviens.Columns.Add("Mã lớp");
             dataSinhviens.Columns.Add("Giới tính");
             dataSinhviens.Columns.Add("Ngày sinh",typeof(DateTime));
@@ -47,6 +48,7 @@ namespace PhanMemQuanLiThiTracNghiem
                 row["Mã số sinh viên"] = item.Mssv;
                 row["Họ tên"] = item.Tensv;
                 row["Mã khoa"] = item.Mak;
+                row["Tên khoa"] = item.Tenk;
                 row["Mã lớp"] = item.Mal;
                 row["Giới tính"] = item.Gt;
                 if (item.Gt == true)
@@ -76,14 +78,11 @@ namespace PhanMemQuanLiThiTracNghiem
             txt_mSV.Texts = row.Cells[0].Value.ToString();
             txt_tenSV.Texts = row.Cells[1].Value.ToString();
             
-            ComboBox_mK();
-            
-            
-            cbb_mK.Text = row.Cells[2].Value.ToString();
-            cbb_mL.Text = row.Cells[3].Value.ToString();
+            cbb_mK.Text = row.Cells[2].Value.ToString()+" - " + row.Cells[3].Value.ToString();
+            cbb_mL.Text = row.Cells[4].Value.ToString();
 
 
-            if (row.Cells[4].Value.ToString() == "Nam")
+            if (row.Cells[5].Value.ToString() == "Nam")
             {
                 rad_nam.Checked = true;
             }
@@ -91,9 +90,9 @@ namespace PhanMemQuanLiThiTracNghiem
             {
                 rad_nu.Checked = true;
             }
-            dtp_nsSV.Value = DateTime.Parse(row.Cells[5].Value.ToString());
-            txt_passwd.Texts = row.Cells[6].Value.ToString();
-            if (bool.Parse(row.Cells[7].Value.ToString()) == true)
+            dtp_nsSV.Value = DateTime.Parse(row.Cells[6].Value.ToString());
+            txt_passwd.Texts = row.Cells[7].Value.ToString();
+            if (bool.Parse(row.Cells[8].Value.ToString()) == true)
             {
                 rad_enable.Checked = true;
             }
@@ -152,6 +151,30 @@ namespace PhanMemQuanLiThiTracNghiem
             cbb_mL.DisplayMember = "MALOP";
         }
         
+        // ràng buộc lớp với khoa
+        private void cbb_mK_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // hiển thị combobox lớp
+            // Tạo đối tượng SqlDataAdapter để thực thi câu lệnh truy vấn và lấy dữ liệu từ database.
+            string lop = "select MALOP,TENLOP from LOP";
+            string[] khoa = cbb_mK.Text.Split('-');
+            if (cbb_mK.Text.CompareTo("Chọn khoa") != 0)
+            {
+                lop = "select MALOP,TENLOP from LOP where MAKHOA = '" + khoa[0] + "' ";
+            }
+            SqlDataAdapter adapter = new SqlDataAdapter(lop, ConnectionData.GetSqlConnection());
+            DataTable dt = new DataTable();
+            // đổ dữ liệu vào datatable
+            adapter.Fill(dt);
+            // xét vị trí đầu tiên 
+            DataRow item = dt.NewRow();
+            item[0] = "Chọn lớp";
+            dt.Rows.InsertAt(item, 0);
+            cbb_mL.DataSource = dt;
+            cbb_mL.ValueMember = "MALOP"; // gán giá trị tương ứng với mỗi mục trong ComboBox là giá trị của cột "MaLOP" trong DataTable
+
+            cbb_mL.DisplayMember = "MALOP";
+        }
 
         private async void btn_them_Click(object sender, EventArgs e)
         {
@@ -164,8 +187,8 @@ namespace PhanMemQuanLiThiTracNghiem
             {
                 string Mssv = txt_mSV.Texts.Trim();
                 string hoTen = txt_tenSV.Texts.Trim();
-                string maL = cbb_mK.Text;
-                string maK = cbb_mL.Text;
+                string maL = cbb_mL.Text;
+                string maK = cbb_mK.SelectedValue.ToString();
                 string gioiTinh;
                 if (rad_nam.Checked == true)
                     gioiTinh = "1";
@@ -214,8 +237,8 @@ namespace PhanMemQuanLiThiTracNghiem
             {
                 string Mssv = txt_mSV.Texts.Trim();
                 string hoTen = txt_tenSV.Texts.Trim();
-                string maL = cbb_mK.Text;
-                string maK = cbb_mL.Text;
+                string maL = cbb_mL.Text;
+                string maK = cbb_mK.SelectedValue.ToString();
                 string gioiTinh;
                 if (rad_nam.Checked == true)
                     gioiTinh = "1";
@@ -272,8 +295,8 @@ namespace PhanMemQuanLiThiTracNghiem
             {
                 string Mssv = txt_mSV.Texts.Trim();
                 string hoten = txt_tenSV.Texts.Trim();
-                string maL = cbb_mK.Text;
-                string maK = cbb_mL.Text;
+                string maL = cbb_mL.Text;
+                string maK = cbb_mK.SelectedValue.ToString();
                 string ngaysinh = dtp_nsSV.Value.ToString();
                 bool flag = false;
 
@@ -290,7 +313,7 @@ namespace PhanMemQuanLiThiTracNghiem
                     }
                     if (flag == true)
                     {
-                        DialogResult result = RJMessageBox.Show("Bạn có chắc chắn xóa sinh viên có: \n\t Mã số sinh viên: " + Mssv + "\n\t Họ tên: " + hoten + " \n\t Mã lớp: "+maL+" \n\t Mã khoa: "+maK+" \n\t Sinh ngày: "+ngaysinh+" ", "Lưu ý !!!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        DialogResult result = RJMessageBox.Show("Bạn có chắc chắn xóa sinh viên có: \n\t Mã số sinh viên: " + Mssv + "\n\t Họ tên: " + hoten + " \n\t Mã lớp: "+maL+" \n\t Mã khoa: "+maK+" \n\t Sinh ngày: "+ngaysinh+" \n   ", "Lưu ý !!!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                         if (result == DialogResult.Yes)
                         {
                             modify.ChinhSuaDuLieu(deleteGV);
@@ -351,8 +374,8 @@ namespace PhanMemQuanLiThiTracNghiem
 
             string ms = txt_mSV.Texts.Trim();
             string hoten = txt_tenSV.Texts.Trim();
-            string maL = cbb_mK.Text;
-            string maK = cbb_mL.Text;
+            string maL = cbb_mL.Text;
+            string maK = cbb_mK.SelectedValue.ToString();
             // 1 = nam , 2 = nu
             string gioitinh = "";
             if (rad_nam.Checked == true)
@@ -384,7 +407,7 @@ namespace PhanMemQuanLiThiTracNghiem
                 {
                     maL = "";
                 }
-                string queryS = "SELECT SINHVIEN.MSSV,HOTENSV,SINHVIEN.MALOP,LOP.MAKHOA,GIOITINHSV,NGAYSINHSV,PASSWORDSV,ENABLESV FROM SINHVIEN INNER JOIN SVACCOUNTS ON SINHVIEN.MSSV = SVACCOUNTS.MSSV INNER JOIN LOP ON LOP.MALOP = SINHVIEN.MALOP where SINHVIEN.MSSV LIKE '%" + ms + "%' and HOTENSV like '%" + hoten + "%' and LOP.MALOP like '%"+maL+"%' and LOP.MAKHOA like '%" + maK + "%' " + gioitinh + " ORDER BY MSSV ASC  ";
+                string queryS = "SELECT SINHVIEN.MSSV,HOTENSV,SINHVIEN.MALOP,LOP.MAKHOA,KHOA.TENKHOA,GIOITINHSV,NGAYSINHSV,PASSWORDSV,ENABLESV FROM SINHVIEN INNER JOIN SVACCOUNTS ON SINHVIEN.MSSV = SVACCOUNTS.MSSV INNER JOIN LOP ON LOP.MALOP = SINHVIEN.MALOP INNER JOIN KHOA ON KHOA.MAKHOA = SINHVIEN.MAKHOA where SINHVIEN.MSSV LIKE '%" + ms + "%' and HOTENSV like '%" + hoten + "%' and LOP.MALOP like '%"+maL+"%' and LOP.MAKHOA like '%" + maK + "%' " + gioitinh + " ORDER BY MSSV ASC  ";
                 HienThiSinhVien(queryS);
                 RJMessageBox.Show("Hoàn thành tìm kiếm.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -394,28 +417,22 @@ namespace PhanMemQuanLiThiTracNghiem
             }
         }
 
-        private void cbb_mK_SelectedIndexChanged(object sender, EventArgs e)
+        
+        /*private void txt_passwd_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // hiển thị combobox lớp
-            // Tạo đối tượng SqlDataAdapter để thực thi câu lệnh truy vấn và lấy dữ liệu từ database.
-            string lop = "select MALOP,TENLOP from LOP";
-            string[] khoa = cbb_mK.Text.Split('-');
-            if (cbb_mK.Text.CompareTo("Chọn khoa") != 0)
+            if (e.KeyChar == (char)Keys.Enter) // nếu nhập có phím enter 
             {
-                lop = "select MALOP,TENLOP from LOP where MAKHOA = '" + khoa[0] + "' ";
+                btn_them.PerformClick(); // kích hoạt chức năng click
+                //e.Handled = true; // ngăn ko cho ký tự enter vào textbox
             }
-            SqlDataAdapter adapter = new SqlDataAdapter(lop, ConnectionData.GetSqlConnection());
-            DataTable dt = new DataTable();
-            // đổ dữ liệu vào datatable
-            adapter.Fill(dt);
-            // xét vị trí đầu tiên 
-            DataRow item = dt.NewRow();
-            item[0] = "Chọn lớp";
-            dt.Rows.InsertAt(item, 0);
-            cbb_mL.DataSource = dt;
-            cbb_mL.ValueMember = "MALOP"; // gán giá trị tương ứng với mỗi mục trong ComboBox là giá trị của cột "MaLOP" trong DataTable
-
-            cbb_mL.DisplayMember = "MALOP";
+            
         }
+
+        private void rad_enable_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rad_enable.Checked == true)
+                txt_passwd.Focus();
+            
+        }*/
     }
 }

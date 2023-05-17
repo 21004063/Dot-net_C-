@@ -37,3 +37,4 @@ D:\University\Nam_II\LapTrinh-DotNET\PhanMemQuanLiThiTracNghiem\PhanMemQuanLiThi
 D:\University\Nam_II\LapTrinh-DotNET\PhanMemQuanLiThiTracNghiem\PhanMemQuanLiThiTracNghiem\obj\Debug\PhanMemQuanLiThiTracNghiem.frm_CustomGV.resources
 D:\University\Nam_II\LapTrinh-DotNET\PhanMemQuanLiThiTracNghiem\PhanMemQuanLiThiTracNghiem\obj\Debug\PhanMemQuanLiThiTracNghiem.frm_timkiemGV.resources
 D:\University\Nam_II\LapTrinh-DotNET\PhanMemQuanLiThiTracNghiem\PhanMemQuanLiThiTracNghiem\obj\Debug\PhanMemQuanLiThiTracNghiem.frm_Messagebox.resources
+D:\University\Nam_II\LapTrinh-DotNET\PhanMemQuanLiThiTracNghiem\PhanMemQuanLiThiTracNghiem\obj\Debug\PhanMemQuanLiThiTracNghiem.RJRadioButton.resources

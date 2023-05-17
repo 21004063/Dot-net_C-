@@ -28,7 +28,7 @@ namespace PhanMemQuanLiThiTracNghiem
             HienThiGiangVien(query);
 
             ComboBox_Khoa();
-            
+            txt_mGV.Focus();
 
         }
         

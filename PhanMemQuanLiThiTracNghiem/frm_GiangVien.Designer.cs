@@ -125,7 +125,7 @@
             this.tb_enable.OnBackColor = System.Drawing.Color.Gold;
             this.tb_enable.OnToggleColor = System.Drawing.Color.Red;
             this.tb_enable.Size = new System.Drawing.Size(53, 25);
-            this.tb_enable.TabIndex = 8;
+            this.tb_enable.TabIndex = 9;
             this.tb_enable.UseVisualStyleBackColor = false;
             // 
             // label3
@@ -201,7 +201,7 @@
             this.txt_passwd.Padding = new System.Windows.Forms.Padding(7);
             this.txt_passwd.PasswordChar = false;
             this.txt_passwd.Size = new System.Drawing.Size(281, 40);
-            this.txt_passwd.TabIndex = 7;
+            this.txt_passwd.TabIndex = 8;
             this.txt_passwd.Texts = "";
             this.txt_passwd.UnderlinedStyle = false;
             // 
@@ -231,7 +231,7 @@
             this.txt_chucvu.Padding = new System.Windows.Forms.Padding(7);
             this.txt_chucvu.PasswordChar = false;
             this.txt_chucvu.Size = new System.Drawing.Size(281, 40);
-            this.txt_chucvu.TabIndex = 6;
+            this.txt_chucvu.TabIndex = 7;
             this.txt_chucvu.Texts = "";
             this.txt_chucvu.UnderlinedStyle = false;
             // 
@@ -265,8 +265,8 @@
             this.rdb_nu.Name = "rdb_nu";
             this.rdb_nu.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
             this.rdb_nu.Size = new System.Drawing.Size(68, 29);
-            this.rdb_nu.TabIndex = 3;
-            this.rdb_nu.Tag = "4";
+            this.rdb_nu.TabIndex = 5;
+            this.rdb_nu.Tag = "";
             this.rdb_nu.Text = "Nữ";
             this.rdb_nu.UnCheckedColor = System.Drawing.Color.White;
             this.rdb_nu.UseVisualStyleBackColor = true;
@@ -302,8 +302,8 @@
             this.rdb_nam.Name = "rdb_nam";
             this.rdb_nam.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
             this.rdb_nam.Size = new System.Drawing.Size(82, 29);
-            this.rdb_nam.TabIndex = 3;
-            this.rdb_nam.Tag = "4";
+            this.rdb_nam.TabIndex = 4;
+            this.rdb_nam.Tag = "";
             this.rdb_nam.Text = "Nam";
             this.rdb_nam.UnCheckedColor = System.Drawing.Color.White;
             this.rdb_nam.UseVisualStyleBackColor = true;
@@ -320,7 +320,7 @@
             this.dtp_nsGV.Location = new System.Drawing.Point(168, 276);
             this.dtp_nsGV.Name = "dtp_nsGV";
             this.dtp_nsGV.Size = new System.Drawing.Size(174, 33);
-            this.dtp_nsGV.TabIndex = 5;
+            this.dtp_nsGV.TabIndex = 6;
             // 
             // cbb_mK
             // 
@@ -359,7 +359,7 @@
             this.panelbtn.Location = new System.Drawing.Point(0, 635);
             this.panelbtn.Name = "panelbtn";
             this.panelbtn.Size = new System.Drawing.Size(479, 130);
-            this.panelbtn.TabIndex = 22;
+            this.panelbtn.TabIndex = 20;
             // 
             // btn_sua
             // 
@@ -459,7 +459,7 @@
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(479, 601);
-            this.groupBox1.TabIndex = 28;
+            this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Thông tin giảng viên";
             // 
@@ -489,7 +489,7 @@
             this.dgw_GV.Name = "dgw_GV";
             this.dgw_GV.ReadOnly = true;
             this.dgw_GV.Size = new System.Drawing.Size(579, 765);
-            this.dgw_GV.TabIndex = 20;
+            this.dgw_GV.TabIndex = 30;
             this.dgw_GV.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgw_GV_CellClick);
             // 
             // frm_GiangVien
